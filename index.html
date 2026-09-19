@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>Wedding Invitation</title>
+<link rel="preconnect" href="assets/derived/" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<main id="experience" aria-label="Wedding invitation experience">
+
+  <!-- Ambient blurred background of current active slide -->
+  <div id="ambientBackground" aria-hidden="true"></div>
+
+  <!-- Portrait stage holding all invitation cards -->
+  <section id="slideStage" aria-label="Invitation cards">
+
+    <div class="slide scene-1" data-scene="0" aria-label="Scene 1 Ganesha">
+      <video class="sceneVideo loopingSceneVideo" muted loop playsinline preload="auto" poster="assets/derived/scene-1-ganesha.jpg">
+        <source src="assets/derived/scene-1-ganesha.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <div class="slide scene-2" data-scene="1" aria-label="Scene 2 Shubh Vivah">
+      <video class="sceneVideo loopingSceneVideo" muted loop playsinline preload="auto" poster="assets/derived/scene-2-shubh-vivah.jpg">
+        <source src="assets/derived/scene-2-shubh-vivah.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <div class="slide scene-3" data-scene="2" aria-label="Scene 3 Couple">
+      <video class="sceneVideo loopingSceneVideo" muted loop playsinline preload="auto" poster="assets/derived/scene-3-couple.jpg">
+        <source src="assets/derived/scene-3-couple.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <div class="slide scene-4" data-scene="3" role="region" aria-label="Final invitation with scratch date">
+      <video id="finalSceneVideo" style="z-index: 1;" class="sceneVideo loopingSceneVideo" muted loop playsinline preload="auto" poster="assets/derived/scene-4-final.jpg">
+        <source src="assets/derived/scene-4-final.mp4" type="video/mp4" />
+      </video>
+      <div id="datePreBlur" aria-hidden="true"></div>
+      <div id="scratchZone" role="region" aria-label="Scratch to reveal wedding date" tabindex="0">
+        <canvas id="scratchCanvas" aria-hidden="true"></canvas>
+        <div id="scratchHint" aria-hidden="true">SCRATCH TO REVEAL</div>
+      </div>
+    </div>
+
+    <div id="tapHint" aria-hidden="true"><span class="tapHand">☝</span><span class="tapText">TAP TO CONTINUE</span></div>
+
+  </section>
+
+  <!-- Curtain experience layer -->
+  <div id="curtainExperience" aria-label="Curtain opening">
+    <video
+      id="curtainVideo"
+      poster="assets/derived/curtain-poster.jpg"
+      preload="auto"
+      playsinline
+      muted
+      aria-hidden="true"
+    >
+      <source src="assets/derived/curtain-opening.mp4" type="video/mp4" />
+    </video>
+
+    <button id="openInvitation" type="button" aria-label="Tap to open invitation">
+      TAP TO OPEN
+    </button>
+  </div>
+
+  <!-- Small unobtrusive mute/unmute -->
+  <button id="audioToggle" type="button" aria-label="Toggle wedding audio" aria-pressed="false" title="Audio">
+    <span aria-hidden="true"></span>
+  </button>
+
+</main>
+
+<audio id="weddingAudio" preload="auto" loop>
+  <source src="assets/audio/wedding-song.mp3" type="audio/mpeg" />
+</audio>
+
+<script src="script.js?v=3" defer></script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+/* ============================================
+   WEDDING INVITATION — CSS
+   ============================================ */
+
+:root {
+  --scratch-left: 17%;
+  --scratch-top: 35.7%;
+  --scratch-width: 66%;
+  --scratch-height: 6%;
+
+  --ivory: rgba(245, 237, 218, 0.42);
+  --gold-shimmer: rgba(212, 175, 115, 0.08);
+  --warm-dark: #2a1f16;
+  --cream: #fdf8ee;
+}
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: #1a0f08;
+  color: #fdf8ee;
+  font-family: "Georgia", "Times New Roman", serif;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+img, video, canvas {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+/* Experience container */
+#experience {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Ambient blurred background */
+#ambientBackground {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(32px) brightness(0.55) saturate(0.85);
+  transform: scale(1.12);
+  opacity: 0.3;
+  transition: background-image 1s ease, opacity 0.8s ease;
+  pointer-events: none;
+}
+
+/* Portrait stage — centered 9:16 card */
+#slideStage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  cursor: pointer;
+  pointer-events: auto;
+  touch-action: manipulation;
+  touch-action: manipulation;
+}
+
+/* Each slide */
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: translate3d(0, 7%, 0) scale(1.01);
+  filter: blur(0);
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.75s ease, filter 0.75s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.slide.active {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+  z-index: 3;
+  pointer-events: auto;
+}
+
+.slide.leaving {
+  opacity: 0;
+  transform: translateY(-10vh) scale(0.985);
+  filter: blur(5px);
+  z-index: 1;
+}
+
+/* Scene 4 scratch zone */
+.scene-4 {
+  position: relative;
+}
+
+#scratchZone {
+  touch-action: none;
+  position: absolute;
+  left: var(--scratch-left);
+  top: var(--scratch-top);
+  width: var(--scratch-width);
+  height: var(--scratch-height);
+  z-index: 30;
+  touch-action: none;
+  pointer-events: auto;
+  overflow: hidden;
+  cursor: crosshair;
+}
+
+#scratchCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 31;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+#scratchHint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Georgia", serif;
+  font-size: clamp(10px, 1.1vw, 14px);
+  color: rgba(160, 120, 60, 0.9);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  text-shadow: 0 1px 3px rgba(255,255,255,0.15);
+}
+
+/* Curtain layer */
+#curtainExperience {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100dvh;
+  pointer-events: auto;
+}
+
+#curtainExperience.active {
+  pointer-events: auto;
+}
+
+#curtainVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 21;
+  pointer-events: none;
+}
+
+#curtainVideo.playing {
+  opacity: 1;
+}
+
+#curtainVideo.finished {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Tap instruction */
+#openInvitation {
+  position: absolute;
+  z-index: 110;
+  left: 50%;
+  bottom: 10%;
+  transform: translateX(-50%);
+  background: none;
+  border: none;
+  color: rgba(245, 237, 218, 0.92);
+  font-family: "Georgia", serif;
+  font-size: clamp(11px, 1.3vw, 15px);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 12px rgba(30, 15, 5, 0.6);
+  cursor: pointer;
+  padding: 0.6em 1.2em;
+  opacity: 0.95;
+  animation: breathe 3s ease-in-out infinite;
+  transition: opacity 0.3s ease;
+  pointer-events: auto;
+}
+
+#openInvitation:hover, #openInvitation:focus {
+  opacity: 1;
+  outline: none;
+}
+
+#openInvitation.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+/* Audio toggle */
+#audioToggle {
+  position: absolute;
+  z-index: 30;
+  top: env(safe-area-inset-top, 12px);
+  right: env(safe-area-inset-right, 12px);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 115, 0.35);
+  background: rgba(20, 10, 6, 0.55);
+  color: #e8cfa8;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity 0.2s ease, background 0.2s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+#audioToggle:hover, #audioToggle:focus {
+  opacity: 1;
+  background: rgba(30, 15, 5, 0.75);
+  outline: none;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    transition: opacity 0.35s ease;
+    transform: none;
+    filter: none;
+  }
+  #openInvitation { animation: none; }
+  #scratchZone {
+  touch-action: none; transition: none; }
+}
+
+/* Responsive: portrait phones */
+@media (max-width: 420px) and (orientation: portrait) {
+  #slideStage {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+  }
+}
+
+/* Small shimmer around completed scratch */
+#scratchZone.completed::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 12px;
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgba(212,175,115,0.12), transparent 70%);
+  animation: shimmer 2.5s ease-out forwards;
+}
+
+@keyframes shimmer {
+  from { opacity: 0.6; }
+  to { opacity: 0; }
+}
+
+ {
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.85; }
+  50% { transform: translateX(-50%) translateY(-5px); opacity: 1; }
+}
+
+ { pointer-events: none; }
+#slideStage { pointer-events: auto; z-index: 10; }
+
+#tapHint {
+  position: absolute;
+  left: 50%;
+  bottom: 6vh;
+  transform: translateX(-50%);
+  color: rgba(212,175,115,0.92);
+  font-family: "Georgia", serif;
+  font-size: clamp(10px, 1vw, 13px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+@keyframes fadeHint {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+.curtain-fade-out { opacity: 0; }
+
+/* Scene videos */
+.sceneVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.slide[data-scene] { position: absolute; inset: 0; }
+
+#datePreBlur {
+  position: absolute;
+  left: var(--scratch-left);
+  top: var(--scratch-top);
+  width: var(--scratch-width);
+  height: var(--scratch-height);
+  z-index: 20;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  background: rgba(246, 237, 218, 0.32);
+  pointer-events: none;
+  border-radius: 4px;
+}
+#tapHint {
+  position: absolute;
+  left: 50%;
+  bottom: calc(4% + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(45, 20, 18, 0.48);
+  border: 1px solid rgba(244, 220, 172, 0.48);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #f8e7bf;
+  pointer-events: none;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+#tapHint.visible {
+  opacity: 1;
+  animation: tapGuidePulse 1.8s ease-in-out infinite;
+}
+.tapText { font-size: 11px; letter-spacing: 0.16em; font-weight: 600; }
+.tapHand { font-size: 16px; }
+@keyframes tapGuidePulse {
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.72; }
+  50% { transform: translateX(-50%) translateY(-4px); opacity: 1; }
+}
