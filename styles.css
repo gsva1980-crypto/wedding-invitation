@@ -149,6 +149,68 @@ img, video, canvas {
   text-shadow: 0 1px 3px rgba(255,255,255,0.15);
 }
 
+#pdfContinue {
+  position: absolute;
+
+  left: 50%;
+  bottom: calc(
+    4% + env(safe-area-inset-bottom)
+  );
+
+  transform:
+    translateX(-50%)
+    translateY(8px);
+
+  z-index: 90;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 9px 15px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(45, 20, 18, 0.52);
+
+  border:
+    1px solid
+    rgba(244, 220, 172, 0.55);
+
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+
+  color: #f8e7bf;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 0.15em;
+
+  text-decoration: none;
+  white-space: nowrap;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 400ms ease,
+    transform 400ms ease,
+    visibility 400ms;
+}
+
+#pdfContinue.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+
+  transform:
+    translateX(-50%)
+    translateY(0);
+}
+
 /* Curtain layer */
 #curtainExperience {
   position: fixed;

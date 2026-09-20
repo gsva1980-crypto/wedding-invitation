@@ -393,7 +393,7 @@ function checkScratchComplete() {
     if (data[i] < 40) cleared++;
   }
   const pct = cleared / (w * h);
-  if (pct > 0.55) {
+  if (pct > 0.55 && !experience.scratchComplete) {
     experience.scratchComplete = true;
     const sz = document.getElementById("scratchZone");
     if (sz) sz.style.pointerEvents = "none";
@@ -403,6 +403,28 @@ function checkScratchComplete() {
       setTimeout(() => {
         scratchCanvasEl.style.visibility = "hidden";
         scratchCanvasEl.style.pointerEvents = "none";
+
+        const finalSceneVideo = document.getElementById("finalSceneVideo");
+        if (finalSceneVideo) {
+          finalSceneVideo.loop = true;
+
+          const resumePromise = finalSceneVideo.play();
+
+          if (
+            resumePromise &&
+            typeof resumePromise.catch === "function"
+          ) {
+            resumePromise.catch(error => {
+              console.warn(
+                "[FINAL VIDEO] Resume failed",
+                error
+              );
+            });
+          }
+        }
+
+        const pdfContinue = document.getElementById("pdfContinue");
+        pdfContinue?.classList.add("visible");
       }, 620);
     }
     const hint = document.getElementById("scratchHint");
@@ -418,6 +440,12 @@ function checkScratchComplete() {
       event.stopPropagation();
     });
   }
+});
+
+// Stop PDF link clicks from triggering Scene 4 or scratch logic
+const pdfContinue = document.getElementById("pdfContinue");
+pdfContinue?.addEventListener("click", event => {
+  event.stopPropagation();
 });
 
 // Attach directly to scratchZone
